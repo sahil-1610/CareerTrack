@@ -8,7 +8,7 @@ const transporter = nodemailer.createTransport({
     },
 });
 
-export async function sendVerificationEmail(email, otp) {
+async function sendVerificationEmail(email, otp) {
     try {
         console.log('Attempting to send email to:', email); // Debug log
 
@@ -70,6 +70,55 @@ const sendContactFormEmail = async (name, email, subject, message) => {
     }
 };
 
+async function sendWelcomeEmail(email, username) {
+    if (!email || !username) {
+        console.error('Missing required parameters:', { email, username });
+        throw new Error('Email and username are required for welcome email');
+    }
+
+    try {
+        console.log('Attempting to send welcome email to:', email); // Debug log
+        const mailOptions = {
+            from: process.env.EMAIL_USER,
+            to: email,
+            subject: 'Welcome to CareerTrack!',
+            html: `
+                <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+                    <h1 style="color: #333;">Welcome to CareerTrack!</h1>
+                    <p>Dear ${username},</p>
+                    <p>Thank you for joining CareerTrack! We're excited to have you as part of our community.</p>
+                    <p>With CareerTrack, you can:</p>
+                    <ul>
+                        <li>Track your career progress</li>
+                        <li>Build your professional profile</li>
+                        <li>Get personalized career recommendations</li>
+                        <li>Connect with other professionals</li>
+                    </ul>
+                    <p>Get started by completing your profile!</p>
+                    <p>Best regards,</p>
+                    <p>The CareerTrack Team</p>
+                </div>
+            `
+        };
+
+        const info = await transporter.sendMail(mailOptions); // Corrected await
+        console.log('Welcome email sent successfully:', info.messageId);
+        return info;
+    } catch (error) {
+        console.error('Welcome email sending error:', error);
+        console.error('Error details:', {
+            email,
+            username,
+            errorMessage: error.message,
+            stack: error.stack
+        });
+        throw new Error(`Failed to send welcome email: ${error.message}`);
+    }
+}
+
+// Single export statement for all functions
 export { 
-    sendContactFormEmail 
+    sendVerificationEmail,
+    sendContactFormEmail,
+    sendWelcomeEmail
 };

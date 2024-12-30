@@ -1,14 +1,45 @@
 "use client";
-import React, { FormEvent, useState } from "react";
+import React, { useState } from "react";
 import { Meteors } from "@/components/ui/meteors";
 
 function ContactUs() {
-  const [email, setEmail] = useState("");
-  const [message, setMessage] = useState("");
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    subject: "",
+    message: ""
+  });
+  const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const [error, setError] = useState("");
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log("Submitted:", { email, message });
+    setLoading(true);
+    setError("");
+
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData)
+      });
+
+      const data = await response.json();
+      
+      if (!response.ok) {
+        throw new Error(data.error || 'Something went wrong');
+      }
+
+      setSuccess(true);
+      setFormData({ name: "", email: "", subject: "", message: "" });
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -40,26 +71,45 @@ function ContactUs() {
         </p>
         <form onSubmit={handleSubmit} className="space-y-4 mt-4 w-full">
           <input
+            type="text"
+            value={formData.name}
+            onChange={(e) => setFormData({...formData, name: e.target.value})}
+            placeholder="Your name"
+            className="rounded-lg border border-neutral-800 focus:ring-2 focus:ring-teal-500 w-full p-4 bg-neutral-950 placeholder:text-neutral-700"
+            required
+          />
+          <input
             type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            value={formData.email}
+            onChange={(e) => setFormData({...formData, email: e.target.value})}
             placeholder="Your email address"
             className="rounded-lg border border-neutral-800 focus:ring-2 focus:ring-teal-500 w-full p-4 bg-neutral-950 placeholder:text-neutral-700"
             required
           />
+          <input
+            type="text"
+            value={formData.subject}
+            onChange={(e) => setFormData({...formData, subject: e.target.value})}
+            placeholder="Subject"
+            className="rounded-lg border border-neutral-800 focus:ring-2 focus:ring-teal-500 w-full p-4 bg-neutral-950 placeholder:text-neutral-700"
+            required
+          />
           <textarea
-            value={message}
-            onChange={(e) => setMessage(e.target.value)}
+            value={formData.message}
+            onChange={(e) => setFormData({...formData, message: e.target.value})}
             placeholder="Your message"
             className="rounded-lg border border-neutral-800 focus:ring-2 focus:ring-teal-500 w-full p-4 bg-neutral-950 placeholder:text-neutral-700"
             rows={5}
             required
           ></textarea>
+          {error && <p className="text-red-500">{error}</p>}
+          {success && <p className="text-green-500">Message sent successfully!</p>}
           <button
             type="submit"
-            className="px-6 py-2 rounded-lg bg-teal-500 text-white font-medium hover:bg-teal-600 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2"
+            disabled={loading}
+            className="px-6 py-2 rounded-lg bg-teal-500 text-white font-medium hover:bg-teal-600 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 disabled:opacity-50"
           >
-            Send Message
+            {loading ? "Sending..." : "Send Message"}
           </button>
         </form>
       </div>
