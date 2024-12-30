@@ -1,0 +1,89 @@
+{
+  "careers": [
+    {
+      "id": 1,
+      "title": "Software Engineer",
+      "slug": "software-engineer",
+      "description": "A role focused on designing, developing, and maintaining software applications.",
+      "salary": 80000,
+      "company": "Tech Innovators Inc.",
+      "isFeatured": true,
+      "image": "/careers/software-engineer.jpg",
+      "location": "San Francisco, CA",
+      "skillsRequired": [
+        "JavaScript",
+        "React",
+        "Node.js",
+        "SQL"
+      ]
+    },
+    {
+      "id": 2,
+      "title": "Data Analyst",
+      "slug": "data-analyst",
+      "description": "Analyze and interpret complex data to help organizations make informed decisions.",
+      "salary": 70000,
+      "company": "Data Solutions Ltd.",
+      "isFeatured": true,
+      "image": "/careers/data-analyst.jpg",
+      "location": "New York, NY",
+      "skillsRequired": [
+        "Python",
+        "SQL",
+        "Excel",
+        "Tableau"
+      ]
+    },
+    {
+      "id": 3,
+      "title": "UI/UX Designer",
+      "slug": "ui-ux-designer",
+      "description": "Design user interfaces and experiences that are visually appealing and user-friendly.",
+      "salary": 75000,
+      "company": "Design Masters",
+      "isFeatured": true,
+      "image": "/careers/ui-ux-designer.jpg",
+      "location": "Los Angeles, CA",
+      "skillsRequired": [
+        "Figma",
+        "Adobe XD",
+        "HTML/CSS",
+        "User Research"
+      ]
+    },
+    {
+      "id": 4,
+      "title": "Project Manager",
+      "slug": "project-manager",
+      "description": "Oversee and manage project development from inception to completion.",
+      "salary": 90000,
+      "company": "Global Projects Corp.",
+      "isFeatured": false,
+      "image": "/careers/project-manager.jpg",
+      "location": "Chicago, IL",
+      "skillsRequired": [
+        "Agile",
+        "Scrum",
+        "MS Project",
+        "Leadership"
+      ]
+    },
+    {
+      "id": 5,
+      "title": "Marketing Specialist",
+      "slug": "marketing-specialist",
+      "description": "Develop and implement marketing strategies to promote products and services.",
+      "salary": 65000,
+      "company": "Market Leaders Ltd.",
+      "isFeatured": false,
+      "image": "/careers/marketing-specialist.jpg",
+      "location": "Austin, TX",
+      "skillsRequired": [
+        "SEO",
+        "Content Creation",
+        "Social Media",
+        "Analytics"
+      ]
+    }
+  ]
+}
